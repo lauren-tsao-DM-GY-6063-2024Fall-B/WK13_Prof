@@ -6,7 +6,7 @@ let lastSend;
 
 function sendSerial(data) {
   if (mSerial.opened()) {
-    mSerial.write(JSON.stringify(data));
+    mSerial.write(JSON.stringify(data)); // turning data into a string
     mSerial.write("\n");
   }
 }
@@ -27,13 +27,13 @@ function setup() {
   connectButton.position(width / 2, height / 2);
   connectButton.mousePressed(connectToSerial);
 
-  lastSend = millis();
+  lastSend = millis(); // the last time p5.js sent info to arduino
 }
 
 function draw() {
   background(0);
-  if (millis() - lastSend > 20) {
+  if (millis() - lastSend > 20) { // if its been 20 milliseconds since info was last sent
     sendSerial({ data: { x: mouseX, y: mouseY, w: width, h: height } });
-    lastSend = millis();
+    lastSend = millis(); // send it
   }
 }
